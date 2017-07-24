@@ -36,6 +36,7 @@ namespace sun_and_wallpaper
 			}
 			GetSettings();
 			SetMenuChecked();
+			CheckTime();
 		}
 
 		private void SetSettings()
@@ -188,24 +189,31 @@ namespace sun_and_wallpaper
 
 		private void CheckTime()
 		{
-			Sun.SunTime suntime = Sun.GetSunTime(lat, lng);
-			DateTime now = DateTime.Now;
-			string path = "";
-			Wallpaper.Style style = Wallpaper.Style.Centered;
-
-			if (now > suntime.sunrise && now < suntime.sunset)
+			try
 			{
-				path = day_wallpaper;
-				style = day_style;
-			}
-			else
-			{
-				path = night_wallpaper;
-				style = night_style;
-			}
+				Sun.SunTime suntime = Sun.GetSunTime(lat, lng);
+				DateTime now = DateTime.Now;
+				string path = "";
+				Wallpaper.Style style = Wallpaper.Style.Centered;
 
-			if (File.Exists(path))
-				Wallpaper.Set(path, style);
+				if (now > suntime.sunrise && now < suntime.sunset)
+				{
+					path = day_wallpaper;
+					style = day_style;
+				}
+				else
+				{
+					path = night_wallpaper;
+					style = night_style;
+				}
+
+				if (File.Exists(path))
+					Wallpaper.Set(path, style);
+			}
+			catch
+			{
+
+			}
 		}
 
 		private void SetCoordinateToolStripMenuItem_Click(object sender, EventArgs e)
