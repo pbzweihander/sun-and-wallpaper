@@ -25,7 +25,8 @@ namespace sun_and_wallpaper
 
 		public static SunTime GetSunTime(double lat, double lng)
 		{
-			string uri = "https://api.sunrise-sunset.org/json?lat=" + lat + "&lng=" + lng + "&date=today&formatted=0";
+			DateTime now = DateTime.Now;
+			string uri = "https://api.sunrise-sunset.org/json?lat=" + lat + "&lng=" + lng + "&date=" + string.Format("{0:yyyy-MM-dd}", now) + "&formatted=0";
 			WebRequest request = WebRequest.Create(uri);
 			Stream stream = request.GetResponse().GetResponseStream();
 			StreamReader reader = new StreamReader(stream);
